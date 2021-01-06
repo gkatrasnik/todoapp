@@ -1,0 +1,46 @@
+.wrapper {
+    display: flex;
+}
+
+#sidebar {
+    width: 20%;
+    height: 97vh;
+    background-color: lightblue;
+}
+
+#content  {
+    width: 70%;
+    margin: auto;
+    height: 97vh;
+    background-color: lightcyan;
+}
+
+#modal {
+    width: 40%;
+    height: 80%;
+    position: absolute ;
+    left: 50%;
+    transform: translate(-50%, 0);
+    top:10vh;
+    background-color: lightcoral;
+
+    
+}
+
+.close {
+    position: absolute;
+    top: 0.2rem;
+    right: 1rem;
+    font-size: 2rem;
+    cursor: pointer;
+    transform: rotate(45deg);
+}
+
+.todo {
+    background-color: grey;
+}
+
+.edit-todo {
+    float: right;
+    padding-right: 1em;
+}

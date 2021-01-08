@@ -1,1 +1,1 @@
-console.log("test");
+(()=>{const e=document.querySelector("#close-modal"),t=document.querySelector("#modal-submit-button"),o=document.querySelector("#project-submit-button"),n=document.querySelector("#add-task-button"),c=document.getElementById("modal");e.addEventListener("click",(e=>{c.style.display="none"})),t.addEventListener("click",(e=>{c.style.display="none"})),o.addEventListener("click",(e=>{console.log(e.target)})),n.addEventListener("click",(e=>{c.style.display="block"}))})();

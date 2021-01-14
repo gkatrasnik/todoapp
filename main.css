@@ -37,6 +37,7 @@
     justify-content: space-between;
     padding-right: 15px;
     padding-left: 15px;
+    cursor: pointer;
 }
 
 .active-project {
@@ -53,7 +54,16 @@
 }
 
 .todo {
+    display: flex;
+    justify-content: space-between;
     background-color: grey;
+    cursor: pointer;
+    padding-left: 5px;
+}
+
+.todo-controls {
+    display: flex;
+    padding-right: 15px;
 }
 
 .edit-todo {
@@ -61,7 +71,7 @@
     padding-right: 1em;
 }
 
-.delete-project {
+.delete-item {
     cursor: pointer;
     
 }

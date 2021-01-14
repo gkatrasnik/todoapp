@@ -1,10 +1,9 @@
-import {projectsList} from "../index.js";
+import {projectsList, currentProjectIndex} from "../index.js";
 
 //factories
 
 const project = (name) => {
-    let toDoItems = []
-    
+    let toDoItems = []    
     
     const showToDo = () => {
         return toDoItems
@@ -16,9 +15,9 @@ const project = (name) => {
     toDoItems.push(todopodatki)
     }
 
-
     return {name, showToDo,addToDo}
 }
+
 
 const toDoFactory = (podatki) => {
     let duedate
@@ -33,4 +32,10 @@ function deleteProjectfromProjectsList(index) {
     projectsList.splice(index,1);
 }
 
-export {project, toDoFactory, deleteProjectfromProjectsList}
+//select clicked project
+function selectProject(index) {
+    currentProjectIndex = index;
+    console.log("selected project index: ", currentProjectIndex)
+}
+
+export {project, toDoFactory, deleteProjectfromProjectsList, selectProject}

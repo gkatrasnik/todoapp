@@ -28,7 +28,7 @@
 }
 #projects-list {
     list-style-type: none;
-    padding-left: 15px;
+    padding-left: 0;
 }
 
 
@@ -36,6 +36,11 @@
     display: flex;
     justify-content: space-between;
     padding-right: 15px;
+    padding-left: 15px;
+}
+
+.active-project {
+    border: solid 1px black;
 }
 
 .close {

@@ -1,5 +1,5 @@
 import {projectsList} from "../index.js";
-import { project,deleteProjectfromProjectsList } from "./logic.js";
+import { project,deleteProjectfromProjectsList, selectProject } from "./logic.js";
 
 
 const closeModal = document.querySelector("#close-modal");
@@ -9,6 +9,7 @@ const projectSubmitButton = document.querySelector("#project-submit-button");
 const addTaskButton = document.querySelector("#add-task-button");
 const modalDiv = document.getElementById("modal");
 const projectsListUl = document.getElementById("projects-list");
+
 
 function renderProjectsList(arrayOfProjects) {
     let projectNames;
@@ -40,7 +41,19 @@ function renderProjectsList(arrayOfProjects) {
         deleteDiv.addEventListener("click", (e) => { 
             li.parentNode.removeChild(li);
             deleteProjectfromProjectsList(i);            
-        })
+        });
+
+        // select project in DOM and in set global variable currentProjectIndex
+        li.addEventListener("click", (e) => {
+            selectProject(i);
+
+            let items = document.querySelectorAll('[data-index]');
+            items.forEach((item) => {
+                item.classList.remove("active-project")
+            })
+            items[i].setAttribute("class", "active-project")
+
+        });
        
     }
 }

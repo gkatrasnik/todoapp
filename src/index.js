@@ -2,7 +2,7 @@ import {project, toDoFactory} from "./modules/logic.js";
 import  {closeModal, modalSubmitButton, addProjectText, projectSubmitButton, addTaskButton, modalDiv, projectsListUl, renderProjectsList} from "./modules/dom.js";
 
 
-// Define elements
+// Array of projects
 let projectsList = [];
 
 
@@ -24,6 +24,7 @@ projectSubmitButton.addEventListener("click", (e) => {
     projectsList.push(np);
     
     renderProjectsList(projectsList);
+    addProjectText.value ="";
     np = "";
 });
 
@@ -31,3 +32,4 @@ addTaskButton.addEventListener("click", (e) => {
     modalDiv.style.display = "block"
 });
 
+export {projectsList}

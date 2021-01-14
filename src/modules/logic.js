@@ -1,4 +1,4 @@
-
+import {projectsList} from "../index.js";
 
 //factories
 
@@ -28,4 +28,9 @@ const toDoFactory = (podatki) => {
     return { duedate, finished} 
 }
 
-export {project, toDoFactory}
+//delete project from projectsList
+function deleteProjectfromProjectsList(index) {
+    projectsList.splice(index,1);
+}
+
+export {project, toDoFactory, deleteProjectfromProjectsList}

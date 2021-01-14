@@ -1,5 +1,5 @@
 import {projectsList} from "../index.js";
-import { project } from "./logic.js";
+import { project,deleteProjectfromProjectsList } from "./logic.js";
 
 
 const closeModal = document.querySelector("#close-modal");
@@ -18,12 +18,34 @@ function renderProjectsList(arrayOfProjects) {
     console.log(projectNames)
 
     for (let i in projectNames) {
-        var li = document.createElement("li");
-        li.appendChild(document.createTextNode(projectNames[i])); 
+        const li = document.createElement("li");
+        li.setAttribute("data-index", i);
+        
+        const contentDiv = document.createElement("div")
+        contentDiv.setAttribute("class", "projects-list-item")
+
+        const textDiv = document.createElement("div")
+        textDiv.textContent = projectNames[i];
+        contentDiv.appendChild(textDiv);
+
+        const deleteDiv = document.createElement("div");
+        deleteDiv.setAttribute("class","delete-project");
+        deleteDiv.textContent = "X";
+        contentDiv.appendChild(deleteDiv);     
+
+        li.appendChild(contentDiv);
         projectsListUl.appendChild(li);
+        
+        //delete project from dom, call delete project from projectsList function from logic.js
+        deleteDiv.addEventListener("click", (e) => { 
+            li.parentNode.removeChild(li);
+            deleteProjectfromProjectsList(i);            
+        })
        
     }
 }
+
+
 
 export {closeModal, modalSubmitButton, addProjectText, projectSubmitButton, addTaskButton, modalDiv, projectsListUl,
         renderProjectsList

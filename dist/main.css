@@ -26,6 +26,17 @@
 
     display: none;
 }
+#projects-list {
+    list-style-type: none;
+    padding-left: 15px;
+}
+
+
+.projects-list-item {
+    display: flex;
+    justify-content: space-between;
+    padding-right: 15px;
+}
 
 .close {
     position: absolute;
@@ -43,4 +54,9 @@
 .edit-todo {
     float: right;
     padding-right: 1em;
+}
+
+.delete-project {
+    cursor: pointer;
+    
 }

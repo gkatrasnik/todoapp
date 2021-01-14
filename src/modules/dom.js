@@ -1,5 +1,5 @@
-import {projectsList} from "../index.js";
-import { project,deleteProjectfromProjectsList, selectProject } from "./logic.js";
+import {projectsList, currentProjectIndex} from "../index.js";
+import {project, deleteProjectfromProjectsList, selectProject } from "./logic.js";
 
 
 const closeModal = document.querySelector("#close-modal");
@@ -9,6 +9,7 @@ const projectSubmitButton = document.querySelector("#project-submit-button");
 const addTaskButton = document.querySelector("#add-task-button");
 const modalDiv = document.getElementById("modal");
 const projectsListUl = document.getElementById("projects-list");
+const todosContent = document.getElementById("todos");
 
 
 function renderProjectsList(arrayOfProjects) {
@@ -30,7 +31,7 @@ function renderProjectsList(arrayOfProjects) {
         contentDiv.appendChild(textDiv);
 
         const deleteDiv = document.createElement("div");
-        deleteDiv.setAttribute("class","delete-project");
+        deleteDiv.setAttribute("class","delete-item");
         deleteDiv.textContent = "X";
         contentDiv.appendChild(deleteDiv);     
 
@@ -46,6 +47,7 @@ function renderProjectsList(arrayOfProjects) {
         // select project in DOM and in set global variable currentProjectIndex
         li.addEventListener("click", (e) => {
             selectProject(i);
+            renderTasks(currentProjectIndex);
 
             let items = document.querySelectorAll('[data-index]');
             items.forEach((item) => {
@@ -56,6 +58,46 @@ function renderProjectsList(arrayOfProjects) {
         });
        
     }
+}
+
+function renderTasks(index) {
+    todosContent.innerHTML = "";
+
+    let todos = projectsList[index].showToDo();
+    let currentProject = projectsList[index];
+    for (let i in todos) {
+        let todoDiv = document.createElement("div");
+        todoDiv.setAttribute("class", "todo");
+        todoDiv.textContent = todos[i];
+
+        let todoControls = document.createElement("div");
+        todoControls.setAttribute("class", "todo-controls");
+        
+        let deleteTodo = document.createElement("div");
+        deleteTodo.setAttribute("class","delete-item");
+        deleteTodo.textContent = "X";
+
+        let editTodo = document.createElement("div");
+        editTodo.setAttribute("class", "edit-todo");
+        editTodo.textContent="Edit"
+
+        todosContent.appendChild(todoDiv);
+        todoControls.appendChild(editTodo);
+        todoControls.appendChild(deleteTodo);
+        todoDiv.appendChild(todoControls);
+
+        //delete todo
+        deleteTodo.addEventListener("click", (e) => {
+            todoDiv.parentNode.removeChild(todoDiv);
+            currentProject.deleteToDo(i);
+        });
+
+        //select todo
+        todoDiv.addEventListener("click", (e) => {
+            
+        })
+    }
+
 }
 
 

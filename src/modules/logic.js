@@ -3,7 +3,7 @@ import {projectsList, currentProjectIndex} from "../index.js";
 //factories
 
 const project = (name) => {
-    let toDoItems = []    
+    let toDoItems = ["banana", "jabuk"];    
     
     const showToDo = () => {
         return toDoItems
@@ -15,7 +15,11 @@ const project = (name) => {
     toDoItems.push(todopodatki)
     }
 
-    return {name, showToDo,addToDo}
+    const deleteToDo = (index) => {
+        toDoItems.splice(index, 1);
+    }
+
+    return {name, showToDo,addToDo, deleteToDo}
 }
 
 

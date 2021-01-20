@@ -2,14 +2,23 @@ import {projectsList, currentProjectIndex} from "../index.js";
 import {project, deleteProjectfromProjectsList, selectProject } from "./logic.js";
 
 
-const closeModal = document.querySelector("#close-modal");
-const modalSubmitButton = document.querySelector("#modal-submit-button");
+
+
 const addProjectText = document.getElementById("newproject");
 const projectSubmitButton = document.querySelector("#project-submit-button");
 const addTaskButton = document.querySelector("#add-task-button");
-const modalDiv = document.getElementById("modal");
 const projectsListUl = document.getElementById("projects-list");
 const todosContent = document.getElementById("todos");
+
+// modal elements
+const closeModal = document.querySelector("#close-modal");
+const modalSubmitButton = document.querySelector("#modal-submit-button");
+const modalDiv = document.getElementById("modal");
+
+const taskName = document.getElementById("name");
+const dueDate = document.getElementById("due-date");
+const finished = document.getElementById("finished");
+const description = document.getElementById("description");
 
 
 function renderProjectsList(arrayOfProjects) {
@@ -94,7 +103,9 @@ function renderTasks(index) {
 
         //select todo
         todoDiv.addEventListener("click", (e) => {
-            
+            for  (i in todo) {
+
+            }
         })
     }
 
@@ -102,6 +113,17 @@ function renderTasks(index) {
 
 
 
-export {closeModal, modalSubmitButton, addProjectText, projectSubmitButton, addTaskButton, modalDiv, projectsListUl,
+export {        
+        addProjectText,
+        projectSubmitButton,
+        addTaskButton,
+        modalSubmitButton,
+        closeModal,
+        projectsListUl,
+        modalDiv,
+        taskName,
+        dueDate,
+        finished,
+        description,
         renderProjectsList
 }

@@ -92,6 +92,11 @@ function renderTasks(index) {
             currentProject.deleteToDo(i);
         });
 
+        //edit todo
+        editTodo.addEventListener("click", (e) => {
+            
+        });
+
         //select todo
         todoDiv.addEventListener("click", (e) => {
             

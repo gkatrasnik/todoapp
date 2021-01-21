@@ -1,5 +1,5 @@
 import {project, toDoFactory, selectProject} from "./modules/logic.js";
-import  {closeModal, modalSubmitButton, addProjectText, projectSubmitButton, addTaskButton, modalDiv, projectsListUl, renderProjectsList} from "./modules/dom.js";
+import  {closeModal, modalSubmitButton, addProjectText, projectSubmitButton, addTaskButton, modalDiv, projectsListUl, renderProjectsList, taskName, dueDate, finished, description,} from "./modules/dom.js";
 
 
 // Global variables
@@ -12,7 +12,14 @@ closeModal.addEventListener("click", (e) => {
 });
 
 modalSubmitButton.addEventListener("click", (e) => {
+    e.preventDefault();
     modalDiv.style.display = "none"
+
+    let task = toDoFactory(taskName.value, dueDate.value, finished.checked, description.value )
+    projectsList[currentProjectIndex].addToDo(task);
+    let g = projectsList[currentProjectIndex].showToDo()
+    console.log(g)
+    
 });
 
 projectSubmitButton.addEventListener("click", (e) => {

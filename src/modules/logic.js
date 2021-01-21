@@ -23,12 +23,10 @@ const project = (name) => {
 }
 
 
-const toDoFactory = (podatki) => {
-    let duedate
-    let finished
+const toDoFactory = (name, dueDate, finished, description) => {
 
-    // todo factory..., podobn kt gor pr projektu seprau usak todo item bo mu neke podatke, ki bodo shranjeni v ta factory....
-    return { duedate, finished} 
+
+    return { name, dueDate, finished, description} 
 }
 
 //delete project from projectsList

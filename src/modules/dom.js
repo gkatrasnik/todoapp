@@ -1,4 +1,4 @@
-import {projectsList, currentProjectIndex} from "../index.js";
+import {projectsList, currentProjectIndex, currentTask} from "../index.js";
 import {project, deleteProjectfromProjectsList, selectProject } from "./logic.js";
 
 
@@ -72,12 +72,16 @@ function renderProjectsList(arrayOfProjects) {
 function renderTasks(index) {
     todosContent.innerHTML = "";
 
-    let todos = projectsList[index].showToDo();
     let currentProject = projectsList[index];
+    let todos = projectsList[index].showToDo();
+    
     for (let i in todos) {
+
         let todoDiv = document.createElement("div");
         todoDiv.setAttribute("class", "todo");
-        todoDiv.textContent = todos[i];
+
+        
+        todoDiv.textContent = todos[i]["name"] + " Due Date: " + todos[i]["dueDate"] + " Finished: " +  todos[i]["finished"]  + " Description: " + todos[i]["description"]; // sets todoDiv text content 
 
         let todoControls = document.createElement("div");
         todoControls.setAttribute("class", "todo-controls");
@@ -101,21 +105,35 @@ function renderTasks(index) {
             currentProject.deleteToDo(i);
         });
 
-        //edit todo
+        //edit todo               ---------------------------------------------------------------------------------------------------------------------------------
         editTodo.addEventListener("click", (e) => {
-            
+            currentTask = todos[i]; // use it 
+            console.log(currentTask)
+            modalDiv.style.display = "block";
+
+            taskName.value = todos[i]["name"]
+            dueDate.value = todos[i]["dueDate"]
+            finished.checked = todos[i]["finished"]
+            description.value = todos[i]["description"]
+
         });
 
         //select todo
         todoDiv.addEventListener("click", (e) => {
-            for  (i in todo) {
-
+            for  (i in currentProject) {
+                
             }
         })
     }
 
 }
 
+function clearModal () {
+    taskName.value = "";
+    dueDate.value = "";
+    finished.checked = false;
+    description.value = "";
+}
 
 
 export {        
@@ -130,5 +148,7 @@ export {
         dueDate,
         finished,
         description,
-        renderProjectsList
+        renderProjectsList,
+        renderTasks,
+        clearModal
 }

@@ -3,7 +3,7 @@ import {projectsList, currentProjectIndex} from "../index.js";
 //factories
 
 const project = (name) => {
-    let toDoItems = ["banana", "jabuk"];    
+    let toDoItems = [];    
     
     const showToDo = () => {
         return toDoItems
@@ -37,7 +37,7 @@ function deleteProjectfromProjectsList(index) {
 //select clicked project
 function selectProject(index) {
     currentProjectIndex = index;
-    console.log("selected project index: ", currentProjectIndex)
+   // console.log("selected project index: ", currentProjectIndex)
 }
 
 export {project, toDoFactory, deleteProjectfromProjectsList, selectProject}

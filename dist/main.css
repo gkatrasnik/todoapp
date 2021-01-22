@@ -26,6 +26,19 @@
 
     display: none;
 }
+
+#edit-modal {
+    width: 40%;
+    height: 80%;
+    position: absolute ;
+    left: 50%;
+    transform: translate(-50%, 0);
+    top:10vh;
+    background-color: lightsalmon;
+
+    display: none;
+}
+
 #projects-list {
     list-style-type: none;
     padding-left: 0;

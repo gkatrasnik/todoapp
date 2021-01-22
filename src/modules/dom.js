@@ -20,6 +20,16 @@ const dueDate = document.getElementById("due-date");
 const finished = document.getElementById("finished");
 const description = document.getElementById("description");
 
+//edit modal elements
+const editCloseModal = document.querySelector("#edit-close-modal");
+const editModalSubmitButton = document.querySelector("#edit-modal-submit-button");
+const editModalDiv = document.getElementById("edit-modal");
+
+const editTaskName = document.getElementById("edit-name");
+const editDueDate = document.getElementById("edit-due-date");
+const editFinished = document.getElementById("edit-finished");
+const editDescription = document.getElementById("edit-description");
+
 
 function renderProjectsList(arrayOfProjects) {
     let projectNames;
@@ -107,14 +117,15 @@ function renderTasks(index) {
 
         //edit todo               ---------------------------------------------------------------------------------------------------------------------------------
         editTodo.addEventListener("click", (e) => {
-            currentTask = todos[i]; // use it 
+            currentTask =  projectsList[currentProjectIndex]; // use it 
             console.log(currentTask)
-            modalDiv.style.display = "block";
 
-            taskName.value = todos[i]["name"]
-            dueDate.value = todos[i]["dueDate"]
-            finished.checked = todos[i]["finished"]
-            description.value = todos[i]["description"]
+            editModalDiv.style.display = "block";
+
+            editTaskName.value = todos[i]["name"]
+            editDueDate.value = todos[i]["dueDate"]
+            editFinished.checked = todos[i]["finished"]
+            editDescription.value = todos[i]["description"]
 
         });
 
@@ -148,6 +159,11 @@ export {
         dueDate,
         finished,
         description,
+
+        editModalSubmitButton,
+        editModalDiv,
+        editCloseModal,
+
         renderProjectsList,
         renderTasks,
         clearModal

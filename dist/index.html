@@ -54,17 +54,45 @@
                 /><br />
                 <label for="due-date">Due date:</label>
                 <input type="date" id="due-date" name="due-date" /><br />
-                <input type="checkbox" id="finished" name="finished" value="checked">
+                <input type="checkbox" id="finished" name="finished" value="finished">
                 <label for="finished">Task Completed</label><br />
                 <label for="description">Description:</label><br />
                 <textarea
                 name="description"
                 id="description"
                 cols="30"
-                rows="6"
-                ></textarea
-                ><br />
+                rows="6"></textarea><br />
                 <input id ="modal-submit-button" type="submit" value="Submit"/>
+              </form>
+            </div>
+        </div>
+
+        <div id="edit-modal">
+            <div class="container">
+              <h2>Edit Task</h2>
+              <div id="edit-close-modal" class="close">+</div>
+              <form data-new-task-form>
+                <label for="edit-name">Task name:</label><br />
+                <input
+                type="text"
+                id="edit-name"
+                data-new-task-input
+                placeholder="Task name"
+                ariel-label="Add new task item"
+                autocomplete="off"
+                required
+                /><br />
+                <label for="edit-due-date">Due date:</label>
+                <input type="date" id="edit-due-date" name="edit-due-date" /><br />
+                <input type="checkbox" id="edit-finished" name="finished" value="finished">
+                <label for="edit-finished">Task Completed</label><br />
+                <label for="edit-description">Description:</label><br />
+                <textarea
+                name="edit-description"
+                id="edit-description"
+                cols="30"
+                rows="6"></textarea><br />
+                <input id ="edit-modal-submit-button" type="submit" value="Update"/>
               </form>
             </div>
         </div>

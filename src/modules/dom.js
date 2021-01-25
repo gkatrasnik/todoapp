@@ -1,4 +1,4 @@
-import {projectsList, currentProjectIndex, currentTask} from "../index.js";
+import {projectsList, currentProjectIndex, currentTaskId} from "../index.js";
 import {project, deleteProjectfromProjectsList, selectProject } from "./logic.js";
 
 
@@ -33,14 +33,17 @@ const editDescription = document.getElementById("edit-description");
 
 function renderProjectsList(arrayOfProjects) {
     let projectNames;
+    let projectIds;
     projectsListUl.innerHTML ="";
 
     projectNames = arrayOfProjects.map(a => a.name);
-    console.log(projectNames)
+    projectIds = arrayOfProjects.map(b => b.id);
+    console.log(projectIds)
+
 
     for (let i in projectNames) {
         const li = document.createElement("li");
-        li.setAttribute("data-index", i);
+        li.setAttribute("data-index", projectIds[i]);
         
         const contentDiv = document.createElement("div")
         contentDiv.setAttribute("class", "projects-list-item")
@@ -65,8 +68,12 @@ function renderProjectsList(arrayOfProjects) {
 
         // select project in DOM and in set global variable currentProjectIndex
         li.addEventListener("click", (e) => {
-            selectProject(i);
-            renderTasks(currentProjectIndex);
+
+            selectProject(e.target.parentNode.dataset.index);
+            let pIndex = projectsList.findIndex(x => x.id === currentProjectIndex);
+
+            
+            renderTasks(pIndex);
 
             let items = document.querySelectorAll('[data-index]');
             items.forEach((item) => {
@@ -79,6 +86,7 @@ function renderProjectsList(arrayOfProjects) {
     }
 }
 
+
 function renderTasks(index) {
     todosContent.innerHTML = "";
 
@@ -89,6 +97,7 @@ function renderTasks(index) {
 
         let todoDiv = document.createElement("div");
         todoDiv.setAttribute("class", "todo");
+        todoDiv.setAttribute("data-id", todos[i]["id"])
 
         
         todoDiv.textContent = todos[i]["name"] + " Due Date: " + todos[i]["dueDate"] + " Finished: " +  todos[i]["finished"]  + " Description: " + todos[i]["description"]; // sets todoDiv text content 
@@ -117,9 +126,9 @@ function renderTasks(index) {
 
         //edit todo               ---------------------------------------------------------------------------------------------------------------------------------
         editTodo.addEventListener("click", (e) => {
-            currentTask =  projectsList[currentProjectIndex]; // use it 
-            console.log(currentTask)
-
+            
+            currentTaskId = e.target.parentNode.parentNode.dataset.id //curent taskDiv being edited
+            console.log("curent project" + currentProjectIndex + "curent task id "+ currentTaskId)
             editModalDiv.style.display = "block";
 
             editTaskName.value = todos[i]["name"]
@@ -163,6 +172,10 @@ export {
         editModalSubmitButton,
         editModalDiv,
         editCloseModal,
+        editTaskName,
+        editDueDate,
+        editFinished,
+        editDescription,
 
         renderProjectsList,
         renderTasks,

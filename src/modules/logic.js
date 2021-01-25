@@ -1,8 +1,8 @@
-import {projectsList, currentProjectIndex} from "../index.js";
+import {projectsList, currentProjectIndex, currentTaskId} from "../index.js";
 
 //factories
 
-const project = (name) => {
+const project = (id, name) => {
     let toDoItems = [];    
     
     const showToDo = () => {
@@ -19,14 +19,14 @@ const project = (name) => {
         toDoItems.splice(index, 1);
     }
 
-    return {name, showToDo,addToDo, deleteToDo}
+    return {id, name, showToDo,addToDo, deleteToDo}
 }
 
 
-const toDoFactory = (name, dueDate, finished, description) => {
+const toDoFactory = (id, name, dueDate, finished, description) => {
 
 
-    return { name, dueDate, finished, description} 
+    return {id, name, dueDate, finished, description} 
 }
 
 //delete project from projectsList
@@ -40,4 +40,15 @@ function selectProject(index) {
    // console.log("selected project index: ", currentProjectIndex)
 }
 
-export {project, toDoFactory, deleteProjectfromProjectsList, selectProject}
+function editTask(project,task) { //-------------------------edit task function (use id)
+
+    let editedTask = projectsList[project][task]
+    console.log(project, task)
+
+    //editTaskName = todos[i]["name"]
+    //editDueDate = todos[i]["dueDate"]
+    //editFinished = todos[i]["finished"]
+    //editDescription = todos[i]["description"]
+}
+
+export {project, toDoFactory, deleteProjectfromProjectsList, selectProject, editTask}

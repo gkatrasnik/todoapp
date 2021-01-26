@@ -19,7 +19,12 @@ const project = (id, name) => {
         toDoItems.splice(index, 1);
     }
 
-    return {id, name, showToDo,addToDo, deleteToDo}
+    const editToDo = (toDoIndex, newObject) => {
+        toDoItems[toDoIndex] = newObject;
+    }
+
+
+    return {id, name, showToDo,addToDo, deleteToDo, editToDo}
 }
 
 

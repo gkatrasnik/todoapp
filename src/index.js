@@ -45,8 +45,10 @@ editModalSubmitButton.addEventListener("click", (e) => {
     let tIndex = projectsList[pIndex].showToDo().findIndex(y => y.id === currentTaskId);
 
     let task = toDoFactory(currentTaskId, editTaskName.value, editDueDate.value, editFinished.checked, editDescription.value)
-    projectsList[pIndex][tIndex] = task;
-    console.log(projectsList[pIndex]) //// NE DELA; NE RENDERA
+    
+    //let toDoItems = projectsList[pIndex].showToDo();
+    //console.log(projectsList[pIndex].toDoItems[tIndex]) // = task;
+    projectsList[pIndex].editToDo(tIndex, task)
 
     renderTasks(pIndex);
     clearModal();

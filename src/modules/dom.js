@@ -1,7 +1,5 @@
-import {projectsList, currentProjectIndex, currentTaskId} from "../index.js";
-import {project, deleteProjectfromProjectsList, selectProject } from "./logic.js";
-
-
+import {projectsList, currentProjectId, currentTaskId} from "../index.js";
+import {deleteProjectfromProjectsList, selectProject } from "./logic.js";
 
 
 const addProjectText = document.getElementById("newproject");
@@ -66,24 +64,27 @@ function renderProjectsList(arrayOfProjects) {
             deleteProjectfromProjectsList(i);            
         });
 
-        // select project in DOM and in set global variable currentProjectIndex
+        // select project in DOM and in set global variable currentProjectId
         li.addEventListener("click", (e) => {
-
+                     
             selectProject(e.target.parentNode.dataset.index);
-            let pIndex = projectsList.findIndex(x => x.id === currentProjectIndex);
+            let pIndex = projectsList.findIndex(x => x.id === currentProjectId);
 
+            selectProjectDOM(pIndex);
             
             renderTasks(pIndex);
-
-            let items = document.querySelectorAll('[data-index]');
-            items.forEach((item) => {
-                item.classList.remove("active-project")
-            })
-            items[i].setAttribute("class", "active-project")
 
         });
        
     }
+}
+
+function selectProjectDOM(projectIndex) {
+    let items = document.querySelectorAll('[data-index]');
+        items.forEach((item) => {
+            item.classList.remove("active-project");
+        });
+        items[projectIndex].setAttribute("class", "active-project");
 }
 
 
@@ -128,7 +129,7 @@ function renderTasks(index) {
         editTodo.addEventListener("click", (e) => {
             
             currentTaskId = e.target.parentNode.parentNode.dataset.id //curent taskDiv being edited
-            console.log("curent project" + currentProjectIndex + "curent task id "+ currentTaskId)
+            console.log("curent project " + currentProjectId + "curent task id "+ currentTaskId)
             editModalDiv.style.display = "block";
 
             editTaskName.value = todos[i]["name"]
@@ -137,13 +138,6 @@ function renderTasks(index) {
             editDescription.value = todos[i]["description"]
 
         });
-
-        //select todo
-        todoDiv.addEventListener("click", (e) => {
-            for  (i in currentProject) {
-                
-            }
-        })
     }
 
 }
@@ -179,5 +173,6 @@ export {
 
         renderProjectsList,
         renderTasks,
-        clearModal
+        clearModal,
+        selectProjectDOM
 }

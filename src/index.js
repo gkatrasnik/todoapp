@@ -1,10 +1,10 @@
-import {project, toDoFactory, selectProject, editTask} from "./modules/logic.js";
-import  {closeModal, modalSubmitButton, addProjectText, projectSubmitButton, addTaskButton, modalDiv, renderProjectsList, renderTasks, clearModal, taskName, dueDate, finished, description, editModalSubmitButton, editModalDiv,editCloseModal, editTaskName, editDueDate, editFinished, editDescription} from "./modules/dom.js";
+import {project, toDoFactory, selectProject} from "./modules/logic.js";
+import  {selectProjectDOM, closeModal, modalSubmitButton, addProjectText, projectSubmitButton, addTaskButton, modalDiv, renderProjectsList, renderTasks, clearModal, taskName, dueDate, finished, description, editModalSubmitButton, editModalDiv,editCloseModal, editTaskName, editDueDate, editFinished, editDescription} from "./modules/dom.js";
 
 
 // Global variables
 let projectsList = [];
-let currentProjectIndex;
+let currentProjectId;
 let currentTaskId;
 
 
@@ -23,16 +23,15 @@ modalSubmitButton.addEventListener("click", (e) => {
     e.preventDefault();
     modalDiv.style.display = "none"
 
-    let pIndex = projectsList.findIndex(x => x.id === currentProjectIndex);
+    let pIndex = projectsList.findIndex(x => x.id === currentProjectId);
     let taskId = Date.now().toString();
 
     let task = toDoFactory(taskId, taskName.value, dueDate.value, finished.checked, description.value)
     projectsList[pIndex].addToDo(task);
-    let g = projectsList[pIndex].showToDo() //console loging
-    console.log(g)
+    
     renderTasks(pIndex);
     clearModal();
-   
+
 
 });
 
@@ -41,13 +40,10 @@ editModalSubmitButton.addEventListener("click", (e) => {
     editModalDiv.style.display = "none"
 
     //find indexes of edited project and task
-    let pIndex = projectsList.findIndex(x => x.id === currentProjectIndex);
+    let pIndex = projectsList.findIndex(x => x.id === currentProjectId);
     let tIndex = projectsList[pIndex].showToDo().findIndex(y => y.id === currentTaskId);
 
     let task = toDoFactory(currentTaskId, editTaskName.value, editDueDate.value, editFinished.checked, editDescription.value)
-    
-    //let toDoItems = projectsList[pIndex].showToDo();
-    //console.log(projectsList[pIndex].toDoItems[tIndex]) // = task;
     projectsList[pIndex].editToDo(tIndex, task)
 
     renderTasks(pIndex);
@@ -69,13 +65,17 @@ projectSubmitButton.addEventListener("click", (e) => {
     addProjectText.value ="";
 
     //set currentObjectIndex to last added object
+    let pIndex = projectsList.findIndex(x => x.id === projectId);  
+
     selectProject(projectId);
+    selectProjectDOM(pIndex);
     
     
 });
 
 addTaskButton.addEventListener("click", (e) => {
     modalDiv.style.display = "block";
+    console.log("current project: " + currentProjectId)
 });
 
-export {projectsList, currentProjectIndex, currentTaskId}
+export {projectsList, currentProjectId, currentTaskId}

@@ -1,9 +1,11 @@
 import {project, toDoFactory, selectProject} from "./modules/logic.js";
-import  {selectProjectDOM, closeModal, modalSubmitButton, addProjectText, projectSubmitButton, addTaskButton, modalDiv, renderProjectsList, renderTasks, clearModal, taskName, dueDate, finished, description, editModalSubmitButton, editModalDiv,editCloseModal, editTaskName, editDueDate, editFinished, editDescription} from "./modules/dom.js";
+import {selectProjectDOM, closeModal, modalSubmitButton, addProjectText, projectSubmitButton, addTaskButton, modalDiv, renderProjectsList, renderTasks, clearModal, taskName, dueDate, finished, description, editModalSubmitButton, editModalDiv,editCloseModal, editTaskName, editDueDate, editFinished, editDescription} from "./modules/dom.js";
+import {readFromStorage, saveToStorage} from "./modules/storage.js";
+
 
 
 // Global variables
-let projectsList = [];
+let projectsList = ["d"];
 let currentProjectId;
 let currentTaskId;
 
@@ -29,6 +31,7 @@ modalSubmitButton.addEventListener("click", (e) => {
     let task = toDoFactory(taskId, taskName.value, dueDate.value, finished.checked, description.value)
     projectsList[pIndex].addToDo(task);
     
+    saveToStorage(projectsList);
     renderTasks(pIndex);
     clearModal();
 
@@ -46,27 +49,26 @@ editModalSubmitButton.addEventListener("click", (e) => {
     let task = toDoFactory(currentTaskId, editTaskName.value, editDueDate.value, editFinished.checked, editDescription.value)
     projectsList[pIndex].editToDo(tIndex, task)
 
+    saveToStorage(projectsList);
     renderTasks(pIndex);
     clearModal();
-
-    //editTask(pIndex, tIndex);
 
 });
 
 projectSubmitButton.addEventListener("click", (e) => {
     e.preventDefault();
-    // tuki nrdis prek project factorya nov projekt z praznim toDoArrayem, funkcijo za pokazat toDoje, in po sm ti zgor še razložu kako naj bi dodajanje todojev zgledal :), v return daš kar hočeš da je public.
-    let projectId = Date.now().toString(); // ADD P
-    let np = project(projectId, addProjectText.value);    
-    console.log(np);
-    projectsList.push(np);
-    
+    let projectId = Date.now().toString(); 
+    let newProject = project(projectId, addProjectText.value);    
+    projectsList.push(newProject);
+
+    saveToStorage(projectsList);
     renderProjectsList(projectsList);
     addProjectText.value ="";
 
-    //set currentObjectIndex to last added object
+    //project Index -> index of this project ID
     let pIndex = projectsList.findIndex(x => x.id === projectId);  
 
+    
     selectProject(projectId);
     selectProjectDOM(pIndex);
     
@@ -77,5 +79,7 @@ addTaskButton.addEventListener("click", (e) => {
     modalDiv.style.display = "block";
     console.log("current project: " + currentProjectId)
 });
+
+readFromStorage();
 
 export {projectsList, currentProjectId, currentTaskId}

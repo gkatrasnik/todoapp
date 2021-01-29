@@ -20,6 +20,7 @@ const finished = document.getElementById("finished");
 const description = document.getElementById("description");
 
 //edit modal elements
+const editTaskTitle = document.getElementById("edit-task-title");
 const editCloseModal = document.querySelector("#edit-close-modal");
 const editModalSubmitButton = document.querySelector("#edit-modal-submit-button");
 const editModalDiv = document.getElementById("edit-modal");
@@ -113,7 +114,7 @@ function renderTasks(index) {
 
         let editTodo = document.createElement("div");
         editTodo.setAttribute("class", "edit-todo");
-        editTodo.textContent="Edit"
+        editTodo.textContent="See/Edit"
 
         todosContent.appendChild(todoDiv);
         todoControls.appendChild(editTodo);
@@ -134,6 +135,7 @@ function renderTasks(index) {
             console.log("curent project " + currentProjectId + "curent task id "+ currentTaskId)
             editModalDiv.style.display = "block";
 
+            editTaskTitle.textContent =todos[i]["name"]
             editTaskName.value = todos[i]["name"]
             editDueDate.value = todos[i]["dueDate"]
             editFinished.checked = todos[i]["finished"]

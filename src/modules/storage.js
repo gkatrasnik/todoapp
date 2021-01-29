@@ -1,5 +1,6 @@
 import {projectsList} from "../index.js";
 import {renderProjectsList} from "./dom.js";
+import {project} from "./logic.js";
 
 
 
@@ -14,8 +15,19 @@ function readFromStorage() {
         renderProjectsList(projectsList);
       }else {
         let storedData = JSON.parse(localStorage.getItem("projectsList"));
-        projectsList = storedData;
-        console.log(storedData)
+
+        for (let i in storedData) {
+          let newProject = project(storedData[i].id, storedData[i].name); 
+          projectsList[i] = newProject;
+
+          for (let g in storedData[i].toDoItems) {
+            let newToDo = storedData[i].toDoItems[g];
+            projectsList[i].addToDo(newToDo);
+          }
+        }
+
+
+        console.log(projectsList)
         renderProjectsList(projectsList);
       }
       

@@ -1,7 +1,6 @@
-import {projectsList, currentProjectId, currentTaskId} from "../index.js";
+import {projectsList, currentProjectId} from "../index.js";
 
 //factories
-
 const project = (id, name) => {
     let toDoItems = [];    
     
@@ -22,7 +21,7 @@ const project = (id, name) => {
     }
 
 
-    return {id, name, showToDo,addToDo, deleteToDo, editToDo}
+    return {id, name, toDoItems, showToDo,addToDo, deleteToDo, editToDo}
 }
 
 

@@ -1,5 +1,6 @@
 import {projectsList, currentProjectId, currentTaskId} from "../index.js";
 import {deleteProjectfromProjectsList, selectProject } from "./logic.js";
+import {saveToStorage } from "./storage.js";
 
 
 const addProjectText = document.getElementById("newproject");
@@ -19,6 +20,7 @@ const finished = document.getElementById("finished");
 const description = document.getElementById("description");
 
 //edit modal elements
+const editTaskTitle = document.getElementById("edit-task-title");
 const editCloseModal = document.querySelector("#edit-close-modal");
 const editModalSubmitButton = document.querySelector("#edit-modal-submit-button");
 const editModalDiv = document.getElementById("edit-modal");
@@ -36,7 +38,6 @@ function renderProjectsList(arrayOfProjects) {
 
     projectNames = arrayOfProjects.map(a => a.name);
     projectIds = arrayOfProjects.map(b => b.id);
-    console.log(projectIds)
 
 
     for (let i in projectNames) {
@@ -61,7 +62,8 @@ function renderProjectsList(arrayOfProjects) {
         //delete project from dom, call delete project from projectsList function from logic.js
         deleteDiv.addEventListener("click", (e) => { 
             li.parentNode.removeChild(li);
-            deleteProjectfromProjectsList(i);            
+            deleteProjectfromProjectsList(i);       
+            saveToStorage(projectsList);     
         });
 
         // select project in DOM and in set global variable currentProjectId
@@ -123,15 +125,21 @@ function renderTasks(index) {
         deleteTodo.addEventListener("click", (e) => {
             todoDiv.parentNode.removeChild(todoDiv);
             currentProject.deleteToDo(i);
+            saveToStorage(projectsList);  
         });
 
+<<<<<<< HEAD
         //edit todo             
+=======
+        //edit todo
+>>>>>>> 6db1e32b315fc3ff18171d52d5b5b33d0adbf5b7
         editTodo.addEventListener("click", (e) => {
             
             currentTaskId = e.target.parentNode.parentNode.dataset.id //curent taskDiv being edited
             console.log("curent project " + currentProjectId + "curent task id "+ currentTaskId)
             editModalDiv.style.display = "block";
 
+            editTaskTitle.textContent =todos[i]["name"]
             editTaskName.value = todos[i]["name"]
             editDueDate.value = todos[i]["dueDate"]
             editFinished.checked = todos[i]["finished"]

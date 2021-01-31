@@ -112,7 +112,7 @@ function renderTasks(index) {
 
         let editTodo = document.createElement("div");
         editTodo.setAttribute("class", "edit-todo");
-        editTodo.textContent="Edit"
+        editTodo.textContent="See/Edit"
 
         todosContent.appendChild(todoDiv);
         todoControls.appendChild(editTodo);
@@ -125,7 +125,7 @@ function renderTasks(index) {
             currentProject.deleteToDo(i);
         });
 
-        //edit todo               ---------------------------------------------------------------------------------------------------------------------------------
+        //edit todo             
         editTodo.addEventListener("click", (e) => {
             
             currentTaskId = e.target.parentNode.parentNode.dataset.id //curent taskDiv being edited

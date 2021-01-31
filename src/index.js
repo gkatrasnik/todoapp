@@ -1,3 +1,7 @@
+
+//ADD 3. ODIN PROJECT -- SEE ALL TODOS ON STARTUP (MASTER PROJECT)
+
+
 import {project, toDoFactory, selectProject} from "./modules/logic.js";
 import {selectProjectDOM, closeModal, modalSubmitButton, addProjectText, projectSubmitButton, addTaskButton, modalDiv, renderProjectsList, renderTasks, clearModal, taskName, dueDate, finished, description, editModalSubmitButton, editModalDiv,editCloseModal, editTaskName, editDueDate, editFinished, editDescription} from "./modules/dom.js";
 import {readFromStorage, saveToStorage} from "./modules/storage.js";
@@ -19,8 +23,6 @@ editCloseModal.addEventListener("click", (e) => {
     editModalDiv.style.display = "none"
 });
 
-
-
 modalSubmitButton.addEventListener("click", (e) => {    
     e.preventDefault();
     modalDiv.style.display = "none"
@@ -34,8 +36,6 @@ modalSubmitButton.addEventListener("click", (e) => {
     saveToStorage(projectsList);
     renderTasks(pIndex);
     clearModal();
-
-
 });
 
 editModalSubmitButton.addEventListener("click", (e) => {
@@ -52,7 +52,6 @@ editModalSubmitButton.addEventListener("click", (e) => {
     saveToStorage(projectsList);
     renderTasks(pIndex);
     clearModal();
-
 });
 
 projectSubmitButton.addEventListener("click", (e) => {
@@ -67,17 +66,14 @@ projectSubmitButton.addEventListener("click", (e) => {
 
     //project Index -> index of this project ID
     let pIndex = projectsList.findIndex(x => x.id === projectId);  
-
     
     selectProject(projectId);
-    selectProjectDOM(pIndex);
-    
+    selectProjectDOM(pIndex);  
     
 });
 
 addTaskButton.addEventListener("click", (e) => {
     modalDiv.style.display = "block";
-    console.log("current project: " + currentProjectId)
 });
 
 readFromStorage();

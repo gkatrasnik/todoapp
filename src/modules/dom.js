@@ -103,7 +103,7 @@ function renderTasks(index) {
         todoDiv.setAttribute("data-id", todos[i]["id"])
 
         
-        todoDiv.textContent = todos[i]["name"] + " Due Date: " + todos[i]["dueDate"] + " Finished: " +  todos[i]["finished"]  + " Description: " + todos[i]["description"]; // sets todoDiv text content 
+        todoDiv.textContent = `${todos[i]["name"]} Due Date: ${todos[i]["dueDate"]}`; // sets todoDiv text content 
 
         let todoControls = document.createElement("div");
         todoControls.setAttribute("class", "todo-controls");
@@ -128,15 +128,11 @@ function renderTasks(index) {
             saveToStorage(projectsList);  
         });
 
-<<<<<<< HEAD
-        //edit todo             
-=======
         //edit todo
->>>>>>> 6db1e32b315fc3ff18171d52d5b5b33d0adbf5b7
         editTodo.addEventListener("click", (e) => {
             
             currentTaskId = e.target.parentNode.parentNode.dataset.id //curent taskDiv being edited
-            console.log("curent project " + currentProjectId + "curent task id "+ currentTaskId)
+            console.log(`curent project ${currentProjectId} curent task id ${currentTaskId}`)
             editModalDiv.style.display = "block";
 
             editTaskTitle.textContent =todos[i]["name"]

@@ -94,17 +94,35 @@ function selectProjectDOM(projectIndex) {
 function renderAllTasks() {
     todosContent.innerHTML = "";
 
-   // let projects = projectsList.map(a => a.toDoItems)  
+   let allTasksArray = [] 
 
-    for (let taskList in projects) {
-        for (let toDo in projects[taskList]) {
-            console.log(projects[taskList][toDo])
-            createTask(toDo, projects);
+    for (let project in projectsList) {
+        for (let item in projectsList[project].toDoItems) {
+            allTasksArray.push(projectsList[project].toDoItems[item]) 
+
         }
-      
-    }
 
+    }
+    console.log(allTasksArray)
+
+    for (let task in allTasksArray) {
+        createTaskDemo(task, allTasksArray);
+     }
 }
+
+
+function createTaskDemo(task, todos) {
+    let todoDiv = document.createElement("div");
+    todoDiv.setAttribute("class", "todo");
+    todoDiv.setAttribute("data-id", todos[task]["id"])
+    
+    let taskCaption = todos[task]["name"]
+    let taskCaptionUC = taskCaption.toUpperCase()
+    
+    todoDiv.textContent = `${taskCaptionUC}, Due Date: ${todos[task]["dueDate"]}`; // sets todoDiv text content  
+    todosContent.appendChild(todoDiv);
+}
+
 
 function renderTasks(index) {
     todosContent.innerHTML = "";
@@ -117,13 +135,17 @@ function renderTasks(index) {
 }
 
 
+
+
 function createTask(task, todos) {
     let todoDiv = document.createElement("div");
     todoDiv.setAttribute("class", "todo");
     todoDiv.setAttribute("data-id", todos[task]["id"])
 
+    let taskCaption = todos[task]["name"]
+    let taskCaptionUC = taskCaption.toUpperCase()
     
-    todoDiv.textContent = todos[task]["name"] + " Due Date: " + todos[task]["dueDate"] + " Finished: " +  todos[task]["finished"]  + " Description: " + todos[task]["description"]; // sets todoDiv text content 
+    todoDiv.textContent = `${taskCaptionUC}, Due Date: ${todos[task]["dueDate"]}`; // sets todoDiv text content 
 
     let todoControls = document.createElement("div");
     todoControls.setAttribute("class", "todo-controls");

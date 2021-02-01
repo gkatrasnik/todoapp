@@ -1,7 +1,3 @@
-
-//ADD 3. ODIN PROJECT -- SEE ALL TODOS ON STARTUP (MASTER PROJECT)
-
-
 import {project, toDoFactory, selectProject} from "./modules/logic.js";
 import {selectProjectDOM, closeModal, modalSubmitButton, addProjectText, projectSubmitButton, addTaskButton, allTasks, modalDiv, renderProjectsList, renderTasks, renderAllTasks, clearModal, taskName, dueDate, finished, description, editModalSubmitButton, editModalDiv,editCloseModal, editTaskName, editDueDate, editFinished, editDescription} from "./modules/dom.js";
 import {readFromStorage, saveToStorage} from "./modules/storage.js";
@@ -73,6 +69,7 @@ projectSubmitButton.addEventListener("click", (e) => {
     
     selectProject(projectId);
     selectProjectDOM(pIndex);  
+    renderTasks(pIndex);
     
 });
 

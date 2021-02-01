@@ -83,10 +83,10 @@ function renderProjectsList(arrayOfProjects) {
 
 function selectProjectDOM(projectIndex) {
     let items = document.querySelectorAll('[data-index]');
-        items.forEach((item) => {
-            item.classList.remove("active-project");
-        });
-        items[projectIndex].setAttribute("class", "active-project");
+    items.forEach((item) => {
+        item.classList.remove("active-project");
+    });
+    items[projectIndex].setAttribute("class", "active-project");
 }
 
 
@@ -131,11 +131,7 @@ function renderTasks(index) {
     for (let toDo in toDoList) {
        createTask(toDo, toDoList);
     }
-
 }
-
-
-
 
 function createTask(task, todos) {
     let todoDiv = document.createElement("div");
@@ -192,15 +188,12 @@ function createTask(task, todos) {
     });
 }
 
-
-
 function clearModal () {
     taskName.value = "";
     dueDate.value = "";
     finished.checked = false;
     description.value = "";
 }
-
 
 export {        
     addProjectText,

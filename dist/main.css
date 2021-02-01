@@ -39,6 +39,11 @@
     display: none;
 }
 
+#all-tasks {
+    text-align: center;
+    cursor: pointer;
+}
+
 #projects-list {
     list-style-type: none;
     padding-left: 0;

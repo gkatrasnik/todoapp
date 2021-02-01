@@ -8,6 +8,7 @@ const projectSubmitButton = document.querySelector("#project-submit-button");
 const addTaskButton = document.querySelector("#add-task-button");
 const projectsListUl = document.getElementById("projects-list");
 const todosContent = document.getElementById("todos");
+const allTasks = document.getElementById("all-tasks");
 
 // modal elements
 const closeModal = document.querySelector("#close-modal");
@@ -38,7 +39,6 @@ function renderProjectsList(arrayOfProjects) {
 
     projectNames = arrayOfProjects.map(a => a.name);
     projectIds = arrayOfProjects.map(b => b.id);
-
 
     for (let i in projectNames) {
         const li = document.createElement("li");
@@ -90,7 +90,34 @@ function selectProjectDOM(projectIndex) {
 }
 
 
-function createTask(task, todos, currentProject) {
+// MAKE IT WORK --master project?
+function renderAllTasks() {
+    todosContent.innerHTML = "";
+
+   // let projects = projectsList.map(a => a.toDoItems)  
+
+    for (let taskList in projects) {
+        for (let toDo in projects[taskList]) {
+            console.log(projects[taskList][toDo])
+            createTask(toDo, projects);
+        }
+      
+    }
+
+}
+
+function renderTasks(index) {
+    todosContent.innerHTML = "";
+    let toDoList = projectsList[index].showToDo();
+    
+    for (let toDo in toDoList) {
+       createTask(toDo, toDoList);
+    }
+
+}
+
+
+function createTask(task, todos) {
     let todoDiv = document.createElement("div");
     todoDiv.setAttribute("class", "todo");
     todoDiv.setAttribute("data-id", todos[task]["id"])
@@ -116,8 +143,14 @@ function createTask(task, todos, currentProject) {
 
     //delete todo
     deleteTodo.addEventListener("click", (e) => {
+
+        currentTaskId = e.target.parentNode.parentNode.dataset.id //curent taskDiv
+        let pIndex = projectsList.findIndex(x => x.id === currentProjectId);
+        let tIndex = projectsList[pIndex].showToDo().findIndex(y => y.id === currentTaskId);
+
+        projectsList[pIndex].deleteToDo(tIndex);
+
         todoDiv.parentNode.removeChild(todoDiv);
-        currentProject.deleteToDo(task);
         saveToStorage(projectsList);  
     });
 
@@ -138,17 +171,6 @@ function createTask(task, todos, currentProject) {
 }
 
 
-function renderTasks(index) {
-    todosContent.innerHTML = "";
-
-    let currentProject = projectsList[index];
-    let toDoList = projectsList[index].showToDo();
-    
-    for (let i in toDoList) {
-       createTask(i, toDoList, currentProject);
-    }
-
-}
 
 function clearModal () {
     taskName.value = "";
@@ -165,6 +187,7 @@ export {
     modalSubmitButton,
     closeModal,
     projectsListUl,
+    allTasks,
     modalDiv,
     taskName,
     dueDate,
@@ -181,6 +204,7 @@ export {
 
     renderProjectsList,
     renderTasks,
+    renderAllTasks,
     clearModal,
     selectProjectDOM
 }

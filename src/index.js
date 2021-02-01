@@ -3,7 +3,7 @@
 
 
 import {project, toDoFactory, selectProject} from "./modules/logic.js";
-import {selectProjectDOM, closeModal, modalSubmitButton, addProjectText, projectSubmitButton, addTaskButton, modalDiv, renderProjectsList, renderTasks, clearModal, taskName, dueDate, finished, description, editModalSubmitButton, editModalDiv,editCloseModal, editTaskName, editDueDate, editFinished, editDescription} from "./modules/dom.js";
+import {selectProjectDOM, closeModal, modalSubmitButton, addProjectText, projectSubmitButton, addTaskButton, allTasks, modalDiv, renderProjectsList, renderTasks, renderAllTasks, clearModal, taskName, dueDate, finished, description, editModalSubmitButton, editModalDiv,editCloseModal, editTaskName, editDueDate, editFinished, editDescription} from "./modules/dom.js";
 import {readFromStorage, saveToStorage} from "./modules/storage.js";
 
 
@@ -22,6 +22,10 @@ closeModal.addEventListener("click", (e) => {
 editCloseModal.addEventListener("click", (e) => {
     editModalDiv.style.display = "none"
 });
+
+allTasks.addEventListener("click", (e) => {
+    renderAllTasks();
+})
 
 modalSubmitButton.addEventListener("click", (e) => {    
     e.preventDefault();

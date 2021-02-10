@@ -1,5 +1,5 @@
 import { projectsList } from "../index.js";
-import { renderProjectsList } from "./dom.js";
+import { renderAllTasks, renderProjectsList } from "./dom.js";
 import { project } from "./logic.js";
 
 function saveToStorage(projectsList) {
@@ -24,6 +24,7 @@ function readFromStorage() {
 
     console.log(projectsList);
     renderProjectsList(projectsList);
+    renderAllTasks();
   }
 }
 

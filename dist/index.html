@@ -1,102 +1,118 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <meta charset='utf-8'>
-    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <title>To Do List</title>
-    <meta name='viewport' content='width=device-width, initial-scale=1'>
-    <link rel='stylesheet' type='text/css' media='screen' href='main.css'>
-    
-</head>
-<body>
-    <div class ="wrapper">
-        <div id="sidebar">
-            <h2>Projects</h2>
-            <h3>My projects</h3>
-            <ul id="projects-list">
-                
-            </ul>
-            <form >
-                <label for="newproject">Add Project</label><br>
-                <input type="text" id="newproject" name="newproject" value="" placeholder="New project"><br>
-               
-                <button id ="project-submit-button" type="submit">Add Project</button>
-              </form> 
-        </div>
-        <div id="content">
-            <div class="above-todos">
-                <h2>Tasks</h2>
-            </div>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" type="text/css" media="screen" href="main.css" />
+  </head>
+  <body>
+    <div class="wrapper">
+      <div id="sidebar">
+        <h2>Projects</h2>
+        <h3>My projects</h3>
+        <div id="all-tasks">Show All Tasks</div>
+        <ul id="projects-list"></ul>
+        <form>
+          <label for="newproject">Add Project</label><br />
+          <input
+            type="text"
+            id="newproject"
+            name="newproject"
+            value=""
+            placeholder="New project"
+          /><br />
 
-            <div id="todos">
-
-            </div>
-
-            <div class="bellow-todos">
-                <button id="add-task-button">Add Task</button>
-            </div>
+          <button id="project-submit-button" type="submit">Add Project</button>
+        </form>
+      </div>
+      <div id="content">
+        <div class="above-todos">
+          <h2>Tasks</h2>
         </div>
 
-        <div id="modal">
-            <div class="container">
-              <h2>New Task</h2>
-              <div id="close-modal" class="close">+</div>
-              <form data-new-task-form>
-                <label for="name">Task name:</label><br />
-                <input
-                type="text"
-                id="name"
-                data-new-task-input
-                placeholder="Task name"
-                ariel-label="Add new task item"
-                autocomplete="off"
-                required
-                /><br />
-                <label for="due-date">Due date:</label>
-                <input type="date" id="due-date" name="due-date" /><br />
-                <input type="checkbox" id="finished" name="finished" value="finished">
-                <label for="finished">Task Completed</label><br />
-                <label for="description">Description:</label><br />
-                <textarea
-                name="description"
-                id="description"
-                cols="30"
-                rows="6"></textarea><br />
-                <input id ="modal-submit-button" type="submit" value="Submit"/>
-              </form>
-            </div>
-        </div>
+        <div id="todos"></div>
 
-        <div id="edit-modal">
-            <div class="container">
-              <h2 id="edit-task-title">Edit Task</h2>
-              <div id="edit-close-modal" class="close">+</div>
-              <form data-new-task-form>
-                <label for="edit-name">Task name:</label><br />
-                <input
-                type="text"
-                id="edit-name"
-                data-new-task-input
-                placeholder="Task name"
-                ariel-label="Add new task item"
-                autocomplete="off"
-                required
-                /><br />
-                <label for="edit-due-date">Due date:</label>
-                <input type="date" id="edit-due-date" name="edit-due-date" /><br />
-                <input type="checkbox" id="edit-finished" name="finished" value="finished">
-                <label for="edit-finished">Task Completed</label><br />
-                <label for="edit-description">Description:</label><br />
-                <textarea
-                name="edit-description"
-                id="edit-description"
-                cols="30"
-                rows="6"></textarea><br />
-                <input id ="edit-modal-submit-button" type="submit" value="Update"/>
-              </form>
-            </div>
+        <div class="bellow-todos">
+          <button id="add-task-button">Add Task</button>
         </div>
+      </div>
+
+      <div id="modal">
+        <div class="container">
+          <h2>New Task</h2>
+          <div id="close-modal" class="close">+</div>
+          <form data-new-task-form>
+            <label for="name">Task name:</label><br />
+            <input
+              type="text"
+              id="name"
+              data-new-task-input
+              placeholder="Task name"
+              ariel-label="Add new task item"
+              autocomplete="off"
+              required
+            /><br />
+            <label for="due-date">Due date:</label>
+            <input type="date" id="due-date" name="due-date" /><br />
+            <input
+              type="checkbox"
+              id="finished"
+              name="finished"
+              value="finished"
+            />
+            <label for="finished">Task Completed</label><br />
+            <label for="description">Description:</label><br />
+            <textarea
+              name="description"
+              id="description"
+              cols="30"
+              rows="6"
+            ></textarea
+            ><br />
+            <input id="modal-submit-button" type="submit" value="Submit" />
+          </form>
+        </div>
+      </div>
+
+      <div id="edit-modal">
+        <div class="container">
+          <h2 id="edit-task-title">Edit Task</h2>
+          <div id="edit-close-modal" class="close">+</div>
+          <form data-new-task-form>
+            <label for="edit-name">Task name:</label><br />
+            <input
+              type="text"
+              id="edit-name"
+              data-new-task-input
+              placeholder="Task name"
+              ariel-label="Add new task item"
+              autocomplete="off"
+              required
+            /><br />
+            <label for="edit-due-date">Due date:</label>
+            <input type="date" id="edit-due-date" name="edit-due-date" /><br />
+            <input
+              type="checkbox"
+              id="edit-finished"
+              name="finished"
+              value="finished"
+            />
+            <label for="edit-finished">Task Completed</label><br />
+            <label for="edit-description">Description:</label><br />
+            <textarea
+              name="edit-description"
+              id="edit-description"
+              cols="30"
+              rows="6"
+            ></textarea
+            ><br />
+            <input id="edit-modal-submit-button" type="submit" value="Update" />
+          </form>
+        </div>
+      </div>
     </div>
-    <script src='main.js'></script>
-</body>
+    <script src="main.js"></script>
+  </body>
 </html>

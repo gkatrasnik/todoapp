@@ -7,6 +7,7 @@ const projectSubmitButton = document.querySelector("#project-submit-button");
 const addTaskButton = document.querySelector("#add-task-button");
 const projectsListUl = document.getElementById("projects-list");
 const todosContent = document.getElementById("todos");
+const allTasks = document.getElementById("all-tasks");
 
 // modal elements
 const closeModal = document.querySelector("#close-modal");
@@ -85,57 +86,99 @@ function selectProjectDOM(projectIndex) {
   items[projectIndex].setAttribute("class", "active-project");
 }
 
-function renderTasks(index) {
+// MAKE IT WORK --master project?
+function renderAllTasks() {
   todosContent.innerHTML = "";
 
-  let currentProject = projectsList[index];
-  let todos = projectsList[index].showToDo();
+  let allTasksArray = [];
 
-  for (let i in todos) {
-    let todoDiv = document.createElement("div");
-    todoDiv.setAttribute("class", "todo");
-    todoDiv.setAttribute("data-id", todos[i]["id"]);
-
-    todoDiv.textContent = `${todos[i]["name"]} Due Date: ${todos[i]["dueDate"]}`; // sets todoDiv text content
-
-    let todoControls = document.createElement("div");
-    todoControls.setAttribute("class", "todo-controls");
-
-    let deleteTodo = document.createElement("div");
-    deleteTodo.setAttribute("class", "delete-item");
-    deleteTodo.textContent = "X";
-
-    let editTodo = document.createElement("div");
-    editTodo.setAttribute("class", "edit-todo");
-    editTodo.textContent = "See/Edit";
-
-    todosContent.appendChild(todoDiv);
-    todoControls.appendChild(editTodo);
-    todoControls.appendChild(deleteTodo);
-    todoDiv.appendChild(todoControls);
-
-    //delete todo
-    deleteTodo.addEventListener("click", (e) => {
-      todoDiv.parentNode.removeChild(todoDiv);
-      currentProject.deleteToDo(i);
-      saveToStorage(projectsList);
-    });
-
-    //edit todo
-    editTodo.addEventListener("click", (e) => {
-      currentTaskId = e.target.parentNode.parentNode.dataset.id; //curent taskDiv being edited
-      console.log(
-        `curent project ${currentProjectId} curent task id ${currentTaskId}`
-      );
-      editModalDiv.style.display = "block";
-
-      editTaskTitle.textContent = todos[i]["name"];
-      editTaskName.value = todos[i]["name"];
-      editDueDate.value = todos[i]["dueDate"];
-      editFinished.checked = todos[i]["finished"];
-      editDescription.value = todos[i]["description"];
-    });
+  for (let project in projectsList) {
+    for (let item in projectsList[project].toDoItems) {
+      allTasksArray.push(projectsList[project].toDoItems[item]);
+    }
   }
+  console.log(allTasksArray);
+
+  for (let task in allTasksArray) {
+    createTaskDemo(task, allTasksArray);
+  }
+}
+
+function createTaskDemo(task, todos) {
+  let todoDiv = document.createElement("div");
+  todoDiv.setAttribute("class", "todo");
+  todoDiv.setAttribute("data-id", todos[task]["id"]);
+
+  let taskCaption = todos[task]["name"];
+  let taskCaptionUC = taskCaption.toUpperCase();
+
+  todoDiv.textContent = `${taskCaptionUC}, Due Date: ${todos[task]["dueDate"]}`; // sets todoDiv text content
+  todosContent.appendChild(todoDiv);
+}
+
+function renderTasks(index) {
+  todosContent.innerHTML = "";
+  let toDoList = projectsList[index].showToDo();
+
+  for (let toDo in toDoList) {
+    createTask(toDo, toDoList);
+  }
+}
+
+function createTask(task, todos) {
+  let todoDiv = document.createElement("div");
+  todoDiv.setAttribute("class", "todo");
+  todoDiv.setAttribute("data-id", todos[task]["id"]);
+
+  let taskCaption = todos[task]["name"];
+  let taskCaptionUC = taskCaption.toUpperCase();
+
+  todoDiv.textContent = `${taskCaptionUC}, Due Date: ${todos[task]["dueDate"]}`; // sets todoDiv text content
+
+  let todoControls = document.createElement("div");
+  todoControls.setAttribute("class", "todo-controls");
+
+  let deleteTodo = document.createElement("div");
+  deleteTodo.setAttribute("class", "delete-item");
+  deleteTodo.textContent = "X";
+
+  let editTodo = document.createElement("div");
+  editTodo.setAttribute("class", "edit-todo");
+  editTodo.textContent = "See/Edit";
+
+  todosContent.appendChild(todoDiv);
+  todoControls.appendChild(editTodo);
+  todoControls.appendChild(deleteTodo);
+  todoDiv.appendChild(todoControls);
+
+  //delete todo
+  deleteTodo.addEventListener("click", (e) => {
+    currentTaskId = e.target.parentNode.parentNode.dataset.id; //curent taskDiv
+    let pIndex = projectsList.findIndex((x) => x.id === currentProjectId);
+    let tIndex = projectsList[pIndex]
+      .showToDo()
+      .findIndex((y) => y.id === currentTaskId);
+
+    projectsList[pIndex].deleteToDo(tIndex);
+
+    todoDiv.parentNode.removeChild(todoDiv);
+    saveToStorage(projectsList);
+  });
+
+  //edit todo
+  editTodo.addEventListener("click", (e) => {
+    currentTaskId = e.target.parentNode.parentNode.dataset.id; //curent taskDiv being edited
+    console.log(
+      `curent project ${currentProjectId} curent task id ${currentTaskId}`
+    );
+    editModalDiv.style.display = "block";
+
+    editTaskTitle.textContent = todos[task]["name"];
+    editTaskName.value = todos[task]["name"];
+    editDueDate.value = todos[task]["dueDate"];
+    editFinished.checked = todos[task]["finished"];
+    editDescription.value = todos[task]["description"];
+  });
 }
 
 function clearModal() {
@@ -152,6 +195,7 @@ export {
   modalSubmitButton,
   closeModal,
   projectsListUl,
+  allTasks,
   modalDiv,
   taskName,
   dueDate,
@@ -166,6 +210,7 @@ export {
   editDescription,
   renderProjectsList,
   renderTasks,
+  renderAllTasks,
   clearModal,
   selectProjectDOM,
 };

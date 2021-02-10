@@ -6,9 +6,11 @@ import {
   addProjectText,
   projectSubmitButton,
   addTaskButton,
+  allTasks,
   modalDiv,
   renderProjectsList,
   renderTasks,
+  renderAllTasks,
   clearModal,
   taskName,
   dueDate,
@@ -36,6 +38,10 @@ closeModal.addEventListener("click", (e) => {
 
 editCloseModal.addEventListener("click", (e) => {
   editModalDiv.style.display = "none";
+});
+
+allTasks.addEventListener("click", (e) => {
+  renderAllTasks();
 });
 
 modalSubmitButton.addEventListener("click", (e) => {
@@ -95,9 +101,24 @@ projectSubmitButton.addEventListener("click", (e) => {
 
   //project Index -> index of this project ID
   let pIndex = projectsList.findIndex((x) => x.id === projectId);
+});
+
+projectSubmitButton.addEventListener("click", (e) => {
+  e.preventDefault();
+  let projectId = Date.now().toString();
+  let newProject = project(projectId, addProjectText.value);
+  projectsList.push(newProject);
+
+  saveToStorage(projectsList);
+  renderProjectsList(projectsList);
+  addProjectText.value = "";
+
+  //project Index -> index of this project ID
+  let pIndex = projectsList.findIndex((x) => x.id === projectId);
 
   selectProject(projectId);
   selectProjectDOM(pIndex);
+  renderTasks(pIndex);
 });
 
 addTaskButton.addEventListener("click", (e) => {

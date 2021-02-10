@@ -1,7 +1,6 @@
-import {projectsList, currentProjectId, currentTaskId} from "../index.js";
-import {deleteProjectfromProjectsList, selectProject } from "./logic.js";
-import {saveToStorage } from "./storage.js";
-
+import { projectsList, currentProjectId, currentTaskId } from "../index.js";
+import { deleteProjectfromProjectsList, selectProject } from "./logic.js";
+import { saveToStorage } from "./storage.js";
 
 const addProjectText = document.getElementById("newproject");
 const projectSubmitButton = document.querySelector("#project-submit-button");
@@ -22,7 +21,9 @@ const description = document.getElementById("description");
 //edit modal elements
 const editTaskTitle = document.getElementById("edit-task-title");
 const editCloseModal = document.querySelector("#edit-close-modal");
-const editModalSubmitButton = document.querySelector("#edit-modal-submit-button");
+const editModalSubmitButton = document.querySelector(
+  "#edit-modal-submit-button"
+);
 const editModalDiv = document.getElementById("edit-modal");
 
 const editTaskName = document.getElementById("edit-name");
@@ -30,153 +31,141 @@ const editDueDate = document.getElementById("edit-due-date");
 const editFinished = document.getElementById("edit-finished");
 const editDescription = document.getElementById("edit-description");
 
-
 function renderProjectsList(arrayOfProjects) {
-    let projectNames;
-    let projectIds;
-    projectsListUl.innerHTML ="";
+  let projectNames;
+  let projectIds;
+  projectsListUl.innerHTML = "";
 
-    projectNames = arrayOfProjects.map(a => a.name);
-    projectIds = arrayOfProjects.map(b => b.id);
+  projectNames = arrayOfProjects.map((a) => a.name);
+  projectIds = arrayOfProjects.map((b) => b.id);
 
+  for (let i in projectNames) {
+    const li = document.createElement("li");
+    li.setAttribute("data-index", projectIds[i]);
 
-    for (let i in projectNames) {
-        const li = document.createElement("li");
-        li.setAttribute("data-index", projectIds[i]);
-        
-        const contentDiv = document.createElement("div")
-        contentDiv.setAttribute("class", "projects-list-item")
+    const contentDiv = document.createElement("div");
+    contentDiv.setAttribute("class", "projects-list-item");
 
-        const textDiv = document.createElement("div")
-        textDiv.textContent = projectNames[i];
-        contentDiv.appendChild(textDiv);
+    const textDiv = document.createElement("div");
+    textDiv.textContent = projectNames[i];
+    contentDiv.appendChild(textDiv);
 
-        const deleteDiv = document.createElement("div");
-        deleteDiv.setAttribute("class","delete-item");
-        deleteDiv.textContent = "X";
-        contentDiv.appendChild(deleteDiv);     
+    const deleteDiv = document.createElement("div");
+    deleteDiv.setAttribute("class", "delete-item");
+    deleteDiv.textContent = "X";
+    contentDiv.appendChild(deleteDiv);
 
-        li.appendChild(contentDiv);
-        projectsListUl.appendChild(li);
-        
-        //delete project from dom, call delete project from projectsList function from logic.js
-        deleteDiv.addEventListener("click", (e) => { 
-            li.parentNode.removeChild(li);
-            deleteProjectfromProjectsList(i);       
-            saveToStorage(projectsList);     
-        });
+    li.appendChild(contentDiv);
+    projectsListUl.appendChild(li);
 
-        // select project in DOM and in set global variable currentProjectId
-        li.addEventListener("click", (e) => {
-                     
-            selectProject(e.target.parentNode.dataset.index);
-            let pIndex = projectsList.findIndex(x => x.id === currentProjectId);
+    //delete project from dom, call delete project from projectsList function from logic.js
+    deleteDiv.addEventListener("click", (e) => {
+      li.parentNode.removeChild(li);
+      deleteProjectfromProjectsList(i);
+      saveToStorage(projectsList);
+    });
 
-            selectProjectDOM(pIndex);
-            
-            renderTasks(pIndex);
+    // select project in DOM and in set global variable currentProjectId
+    li.addEventListener("click", (e) => {
+      selectProject(e.target.parentNode.dataset.index);
+      let pIndex = projectsList.findIndex((x) => x.id === currentProjectId);
 
-        });
-       
-    }
+      selectProjectDOM(pIndex);
+
+      renderTasks(pIndex);
+    });
+  }
 }
 
 function selectProjectDOM(projectIndex) {
-    let items = document.querySelectorAll('[data-index]');
-        items.forEach((item) => {
-            item.classList.remove("active-project");
-        });
-        items[projectIndex].setAttribute("class", "active-project");
+  let items = document.querySelectorAll("[data-index]");
+  items.forEach((item) => {
+    item.classList.remove("active-project");
+  });
+  items[projectIndex].setAttribute("class", "active-project");
 }
-
 
 function renderTasks(index) {
-    todosContent.innerHTML = "";
+  todosContent.innerHTML = "";
 
-    let currentProject = projectsList[index];
-    let todos = projectsList[index].showToDo();
-    
-    for (let i in todos) {
+  let currentProject = projectsList[index];
+  let todos = projectsList[index].showToDo();
 
-        let todoDiv = document.createElement("div");
-        todoDiv.setAttribute("class", "todo");
-        todoDiv.setAttribute("data-id", todos[i]["id"])
+  for (let i in todos) {
+    let todoDiv = document.createElement("div");
+    todoDiv.setAttribute("class", "todo");
+    todoDiv.setAttribute("data-id", todos[i]["id"]);
 
-        
-        todoDiv.textContent = `${todos[i]["name"]} Due Date: ${todos[i]["dueDate"]}`; // sets todoDiv text content 
+    todoDiv.textContent = `${todos[i]["name"]} Due Date: ${todos[i]["dueDate"]}`; // sets todoDiv text content
 
-        let todoControls = document.createElement("div");
-        todoControls.setAttribute("class", "todo-controls");
-        
-        let deleteTodo = document.createElement("div");
-        deleteTodo.setAttribute("class","delete-item");
-        deleteTodo.textContent = "X";
+    let todoControls = document.createElement("div");
+    todoControls.setAttribute("class", "todo-controls");
 
-        let editTodo = document.createElement("div");
-        editTodo.setAttribute("class", "edit-todo");
-        editTodo.textContent="See/Edit"
+    let deleteTodo = document.createElement("div");
+    deleteTodo.setAttribute("class", "delete-item");
+    deleteTodo.textContent = "X";
 
-        todosContent.appendChild(todoDiv);
-        todoControls.appendChild(editTodo);
-        todoControls.appendChild(deleteTodo);
-        todoDiv.appendChild(todoControls);
+    let editTodo = document.createElement("div");
+    editTodo.setAttribute("class", "edit-todo");
+    editTodo.textContent = "See/Edit";
 
-        //delete todo
-        deleteTodo.addEventListener("click", (e) => {
-            todoDiv.parentNode.removeChild(todoDiv);
-            currentProject.deleteToDo(i);
-            saveToStorage(projectsList);  
-        });
+    todosContent.appendChild(todoDiv);
+    todoControls.appendChild(editTodo);
+    todoControls.appendChild(deleteTodo);
+    todoDiv.appendChild(todoControls);
 
-        //edit todo
-        editTodo.addEventListener("click", (e) => {
-            
-            currentTaskId = e.target.parentNode.parentNode.dataset.id //curent taskDiv being edited
-            console.log(`curent project ${currentProjectId} curent task id ${currentTaskId}`)
-            editModalDiv.style.display = "block";
+    //delete todo
+    deleteTodo.addEventListener("click", (e) => {
+      todoDiv.parentNode.removeChild(todoDiv);
+      currentProject.deleteToDo(i);
+      saveToStorage(projectsList);
+    });
 
-            editTaskTitle.textContent =todos[i]["name"]
-            editTaskName.value = todos[i]["name"]
-            editDueDate.value = todos[i]["dueDate"]
-            editFinished.checked = todos[i]["finished"]
-            editDescription.value = todos[i]["description"]
+    //edit todo
+    editTodo.addEventListener("click", (e) => {
+      currentTaskId = e.target.parentNode.parentNode.dataset.id; //curent taskDiv being edited
+      console.log(
+        `curent project ${currentProjectId} curent task id ${currentTaskId}`
+      );
+      editModalDiv.style.display = "block";
 
-        });
-    }
-
+      editTaskTitle.textContent = todos[i]["name"];
+      editTaskName.value = todos[i]["name"];
+      editDueDate.value = todos[i]["dueDate"];
+      editFinished.checked = todos[i]["finished"];
+      editDescription.value = todos[i]["description"];
+    });
+  }
 }
 
-function clearModal () {
-    taskName.value = "";
-    dueDate.value = "";
-    finished.checked = false;
-    description.value = "";
+function clearModal() {
+  taskName.value = "";
+  dueDate.value = "";
+  finished.checked = false;
+  description.value = "";
 }
 
-
-export {        
-        addProjectText,
-        projectSubmitButton,
-        addTaskButton,
-        modalSubmitButton,
-        closeModal,
-        projectsListUl,
-        modalDiv,
-        taskName,
-        dueDate,
-        finished,
-        description,
-
-        editModalSubmitButton,
-        editModalDiv,
-        editCloseModal,
-        editTaskName,
-        editDueDate,
-        editFinished,
-        editDescription,
-
-        renderProjectsList,
-        renderTasks,
-        clearModal,
-        selectProjectDOM
-}
+export {
+  addProjectText,
+  projectSubmitButton,
+  addTaskButton,
+  modalSubmitButton,
+  closeModal,
+  projectsListUl,
+  modalDiv,
+  taskName,
+  dueDate,
+  finished,
+  description,
+  editModalSubmitButton,
+  editModalDiv,
+  editCloseModal,
+  editTaskName,
+  editDueDate,
+  editFinished,
+  editDescription,
+  renderProjectsList,
+  renderTasks,
+  clearModal,
+  selectProjectDOM,
+};

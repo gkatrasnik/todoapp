@@ -1,6 +1,6 @@
 # todoapp
 
-odin project - to do app\
+Odin project - todo app\
 https://gkatrasnik.github.io/todoapp/
 
 User can add projects. Every project has its own tasks.\
